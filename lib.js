@@ -28,9 +28,7 @@ const cart =
  */
 const itemRepeater =
   itemName =>
-    count => {
-      // TODO
-    }
+    count => Array(count).fill(itemName)
 
 /**
  * should return an array of carts with each given customer's shopping list
@@ -38,10 +36,17 @@ const itemRepeater =
  */
 const constructCarts =
   listings =>
-    customers => {
-      // TODO
-    }
-
+    customers => 
+      customers
+          .map(c => 
+            cart(c.name, 
+                  ...entries(c.shoppingList)
+                  .map( e => itemRepeater( listings[listings.findIndex( l => e[0] === l.name)])(e[1] )
+                  )
+                  .reduce( (acc, cur) => acc.concat(cur), [])
+                )
+              )
+    
 module.exports = {
   listing,
   customer,
